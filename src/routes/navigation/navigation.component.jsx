@@ -4,9 +4,12 @@ import { useContext } from 'react'
 import { UserContext } from '../../contexts/user.context'
 import { ReactComponent as CrownLogo } from './../../assets/crown.svg'
 import './navigation.styles.scss'
+import CartIcon from '../../components/cart-icon/cart-icon.component'
+import CartDropdown from '../../components/cart-dropdown/cart-dropdown.component'
+import { CartContext } from '../../contexts/cart.context'
 const Navigation = ()=>{
-    console.log('rerender')
     const { currentUser, setCurrentUser} = useContext(UserContext)
+    const { isCartOpen } = useContext(CartContext)
     const signOutUserHandler = async ()=>{
       await signOutUser()
       setCurrentUser(null)
@@ -24,7 +27,9 @@ const Navigation = ()=>{
                   <span className="nav-link" onClick={signOutUserHandler}>SIGN OUT</span>
                   :<Link to="/auth" className="nav-link">SIGN IN</Link> 
                 }
+                <CartIcon />
             </div>
+            {isCartOpen && <CartDropdown /> }
         </div>
         <Outlet />
       </>
